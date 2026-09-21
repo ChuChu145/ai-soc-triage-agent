@@ -1,0 +1,96 @@
+{
+  "case_id": "SYNTH-2026-0911-01",
+  "description": "Synthetic Windows Security + Sysmon log excerpt for portfolio/testing use. Simulates: RDP brute force -> successful logon -> credential dumping tool execution -> outbound C2-style connection -> scheduled task persistence.",
+  "host": "WKSTN-FIN07",
+  "events": [
+    {
+      "event_id": 4625,
+      "log_source": "Security",
+      "timestamp": "2026-09-10T02:14:01Z",
+      "account_name": "j.reyes",
+      "logon_type": 10,
+      "source_ip": "185.220.101.47",
+      "workstation": "WKSTN-FIN07",
+      "failure_reason": "%%2313 (Unknown user name or bad password)"
+    },
+    {
+      "event_id": 4625,
+      "log_source": "Security",
+      "timestamp": "2026-09-10T02:14:03Z",
+      "account_name": "j.reyes",
+      "logon_type": 10,
+      "source_ip": "185.220.101.47",
+      "workstation": "WKSTN-FIN07",
+      "failure_reason": "%%2313 (Unknown user name or bad password)"
+    },
+    {
+      "event_id": 4625,
+      "log_source": "Security",
+      "timestamp": "2026-09-10T02:14:05Z",
+      "account_name": "j.reyes",
+      "logon_type": 10,
+      "source_ip": "185.220.101.47",
+      "workstation": "WKSTN-FIN07",
+      "failure_reason": "%%2313 (Unknown user name or bad password)"
+    },
+    {
+      "event_id": 4625,
+      "log_source": "Security",
+      "timestamp": "2026-09-10T02:14:41Z",
+      "account_name": "j.reyes",
+      "logon_type": 10,
+      "source_ip": "185.220.101.47",
+      "workstation": "WKSTN-FIN07",
+      "failure_reason": "%%2313 (Unknown user name or bad password)",
+      "note": "37 total failed attempts between 02:14:01 and 02:19:58 (truncated for sample)"
+    },
+    {
+      "event_id": 4624,
+      "log_source": "Security",
+      "timestamp": "2026-09-10T02:20:12Z",
+      "account_name": "j.reyes",
+      "logon_type": 10,
+      "source_ip": "185.220.101.47",
+      "workstation": "WKSTN-FIN07",
+      "note": "Successful RDP logon immediately following brute force burst"
+    },
+    {
+      "event_id": 1,
+      "log_source": "Sysmon",
+      "timestamp": "2026-09-10T02:21:47Z",
+      "image": "C:\\Users\\j.reyes\\AppData\\Local\\Temp\\svhost_update.exe",
+      "command_line": "svhost_update.exe --dump lsass --out C:\\Windows\\Temp\\sysdiag.tmp",
+      "parent_image": "C:\\Windows\\System32\\cmd.exe",
+      "user": "WKSTN-FIN07\\j.reyes",
+      "hashes": "SHA256=91B5F3A1C2E4D6789ABCDEF0123456789ABCDEF0123456789ABCDEF01234567"
+    },
+    {
+      "event_id": 10,
+      "log_source": "Sysmon",
+      "timestamp": "2026-09-10T02:21:48Z",
+      "source_image": "C:\\Users\\j.reyes\\AppData\\Local\\Temp\\svhost_update.exe",
+      "target_image": "C:\\Windows\\System32\\lsass.exe",
+      "granted_access": "0x1010",
+      "call_trace": "credential access pattern consistent with LSASS memory read"
+    },
+    {
+      "event_id": 3,
+      "log_source": "Sysmon",
+      "timestamp": "2026-09-10T02:23:05Z",
+      "image": "C:\\Users\\j.reyes\\AppData\\Local\\Temp\\svhost_update.exe",
+      "destination_ip": "45.153.240.18",
+      "destination_port": 443,
+      "protocol": "tcp",
+      "note": "Outbound connection to IP with no prior baseline traffic from this host"
+    },
+    {
+      "event_id": 1,
+      "log_source": "Sysmon",
+      "timestamp": "2026-09-10T02:25:30Z",
+      "image": "C:\\Windows\\System32\\schtasks.exe",
+      "command_line": "schtasks /create /tn \"WindowsUpdateCheck\" /tr \"C:\\Windows\\Temp\\sysdiag.tmp\" /sc onlogon /ru SYSTEM",
+      "parent_image": "C:\\Users\\j.reyes\\AppData\\Local\\Temp\\svhost_update.exe",
+      "user": "WKSTN-FIN07\\j.reyes"
+    }
+  ]
+}
