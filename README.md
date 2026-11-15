@@ -13,7 +13,7 @@ An agent that takes raw Windows Security / Sysmon log events, investigates them 
 ## Setup
  
 ```bash
-cd soc-agent-project
+cd ai-soc-triage-agent
 pip install -r requirements.txt
 export ANTHROPIC_API_KEY=sk-ant-...   # from console.anthropic.com/settings/keys
 ```
@@ -73,7 +73,7 @@ Both tools are stubs on purpose, so you can demo the whole thing today without a
 ## Project structure
  
 ```
-soc-agent-project/
+ai-soc-triage-agent/
 ├── agent.py                    # main loop: load log -> call Claude -> handle tool calls -> save report
 ├── prompts/
 │   └── system_prompt.md        # the analyst persona + report format
