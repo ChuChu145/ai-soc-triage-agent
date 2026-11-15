@@ -39,4 +39,3 @@ Table or list of technique ID, name, and which event(s) it applies to.
 Numbered, concrete, prioritised.
 
 Be precise and evidence-based. Do not pad the report with generic security advice that isn't tied to this specific case.
-EOF
